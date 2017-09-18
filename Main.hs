@@ -28,23 +28,6 @@ settings = BaseUrl Https "www.googleapis.com" 443 "/youtube/v3"
 videos :: Maybe Text -> Maybe Text -> Maybe Int -> Maybe Text -> Maybe Text -> Maybe Text -> ClientM Videos
 videos = client api
 
--- https://www.googleapis.com/youtube/v3/videos
-	-- ?chart=mostPopular
-	-- &key=AIzaSyBf3H1gVh9TKKK2UJjYDkkOWPkyF6VWoG0
-	-- &part=contentDetails,statistics
-	-- &regionCode=RU
-	-- &videoCategoryId=2
-	-- &pageToken=CAUQAA
-
--- apikey = "AIzaSyBf3H1gVh9TKKK2UJjYDkkOWPkyF6VWoG0"
--- endpoint = "https://www.googleapis.com/youtube/v3/videos?chart=mostPopular&key=" 
--- 	<> apikey <> "&part=snippet,contentDetails,statistics&maxResults=4"
-
--- data Args = Args { region :: Int, apikey :: String } deriving Show
-
--- cmdargs :: Options.Applicative.Parser Args
--- cmdargs = Args <$> argument auto (metavar "region") <*> argument str (metavar "apikey")
-
 endpoint :: Int -> Text -> ClientM Videos
 endpoint cat_id pg_token = videos (Just "AIzaSyBf3H1gVh9TKKK2UJjYDkkOWPkyF6VWoG0") 
 	(Just "mostPopular") (Just cat_id) (Just "RU") (Just "snippet,contentDetails,statistics")
