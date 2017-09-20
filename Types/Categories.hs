@@ -1,12 +1,13 @@
-module Types.Categories (Category(..), categories) where
+module Types.Categories (Category(..), all) where
 
+import Prelude hiding (all)
 import qualified Data.Text as T
 
 type Text = T.Text
-data Category = Category Text Int
+data Category = Category { title :: Text , cid :: Int }
 
-categories :: [Category]
-categories = Category "Кино и анимация" 1
+all :: [Category]
+all = Category "Кино и анимация" 1
 	: Category "Авто и транспорт" 2 
 	: Category "Музыка" 10 
 	: Category "Животные и питомцы" 15 
@@ -16,7 +17,7 @@ categories = Category "Кино и анимация" 1
 	: Category "Игры" 20 
 	: Category "Видеоблоггеры" 21 
 	: Category "Люди и блоги" 22 
-	: Category "Комедии" 23 
+	: Category "Комедии" 23
 	: Category "Развлечения" 24 
 	: Category "Новости и политика" 25 
 	: Category "Стиль и лайфхаки" 26 

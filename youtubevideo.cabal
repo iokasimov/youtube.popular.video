@@ -10,12 +10,12 @@ extra-source-files: README.md
 cabal-version: >=1.10
 
 library
-  build-depends: base, either, text, bytestring, aeson, servant, servant-client, mtl, lens, pipes
-  exposed-modules: Types.Categories, Types.Videos
-  default-extensions: OverloadedStrings, TypeOperators
+  build-depends: base, either, text, bytestring, aeson, servant, servant-client, mtl, lens, pipes, attoparsec
+  exposed-modules: Types.Categories, Types.Popular, Types.Related, Types.Videoinfo, Parsers.Duration
+  default-extensions: OverloadedStrings, TypeOperators, DataKinds
 
 executable youtubevideo
   main-is: Main.hs
-  build-depends: base, either, text, bytestring, aeson, servant, servant-client, mtl, lens, pipes, http-client, http-client-tls
+  build-depends: base, either, text, bytestring, aeson, servant, servant-client, mtl, lens, pipes, http-client, http-client-tls, optparse-applicative, attoparsec
   default-extensions: OverloadedStrings, TypeOperators, DataKinds
   default-language: Haskell2010
