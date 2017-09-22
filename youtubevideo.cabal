@@ -16,6 +16,6 @@ library
 
 executable youtubevideo
   main-is: Main.hs
-  build-depends: base, either, text, bytestring, aeson, servant, servant-client, mtl, lens, pipes, http-client, http-client-tls, optparse-applicative, attoparsec
+  build-depends: base, either, text, bytestring, aeson, servant, servant-client, mtl, lens, pipes, http-client, http-client-tls, optparse-applicative, attoparsec, hedis, witherable, errors
   default-extensions: OverloadedStrings, TypeOperators, DataKinds
   default-language: Haskell2010
