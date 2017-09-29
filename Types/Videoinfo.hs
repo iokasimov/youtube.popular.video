@@ -9,6 +9,7 @@ import Servant.API
 import Types.Video
 
 type Text = T.Text
+
 ------------------------------------------------------------------------------------------------
 
 data Videoinfo = Videoinfo { nextPageToken :: Maybe Text, items :: [Video] } deriving Show

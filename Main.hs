@@ -71,12 +71,14 @@ textify cat_name video = cat_name
 -- load a bunch of pupular videos
 load_popular :: Connection -> ClientEnv -> APIkey -> Text -> Category -> IO ()
 load_popular connection env (APIkey key) pg_token cat = do
-	result <- runClientM (Popular.endpoint 1 pg_token $ T.pack key) env
-	either (\err -> return ()) go result where
+	T.putStrLn $ Categories.title cat
+	result <- runClientM (Popular.endpoint (Categories.cid cat) pg_token $ T.pack key) env
+	either (\err -> print err) go result where
 		
 		go :: Popular -> IO ()
 		go videos = do
 			-- remove those keys that already exists in cache
+			print $ Video.id' <$> Popular.items videos
 			filtered_keys <- wither (cached connection) $ Video.id' <$> Popular.items videos
 			let filtered_videos = Data.List.filter 
 				(\v -> elem (Video.id' v) filtered_keys) 
