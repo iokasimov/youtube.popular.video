@@ -1,9 +1,15 @@
-module Types.Video (Video(..), Snippet(..), Content(..), Statistics(..),) where
+module Types.Video (Video(..), Snippet(..), Content(..), Statistics(..), textify, save) where
 
 import Data.Aeson
+import Data.Monoid
 import qualified Data.Text as T
+import qualified Data.Text.IO as T
+
+import qualified Parsers.Duration as Duration
+import qualified Types.Category as Category
 
 type Text = T.Text
+type Category = Category.Category
 
 ------------------------------------------------------------------------------------------------
 
@@ -43,3 +49,19 @@ instance FromJSON Statistics where
 		<*> o .:? "likeCount"
 		<*> o .:? "dislikeCount"
 		<*> o .:? "commentCount"
+
+------------------------------------------------------------------------------------------------
+
+textify :: Text -> Video -> Text
+textify cat_name video = cat_name
+	<> "|" <> ((channelTitle . snippet) video)
+	<> "|" <> ((title . snippet) video)
+	<> "|" <> (maybe "" id $ statistics video >>= views)
+	<> "|" <> (maybe "" id $ statistics video >>= likes)
+	<> "|" <> (maybe "" id $ statistics video >>= dislikes)
+	<> "|" <> (maybe "" id $ statistics video >>= comments)
+	<> "|" <> (maybe "" id $ content video >>= Duration.extract . duration)
+
+save :: Category -> Video -> IO ()
+save cat video = T.appendFile "Temporary/result.csv" $ 
+	(textify (Category.title cat) video) <> "\n"

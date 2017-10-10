@@ -1,4 +1,4 @@
-module Types.Categories (Category(..), all) where
+module Types.Category (Category(..), all) where
 
 import Prelude hiding (all)
 import qualified Data.Text as T
