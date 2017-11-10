@@ -52,15 +52,21 @@ instance FromJSON Statistics where
 
 ------------------------------------------------------------------------------------------------
 
+clearify :: Text -> Text
+clearify = T.replace "|" "" 
+	. T.replace "\n" "" 
+	. T.replace "\t" ""
+
 textify :: Text -> Video -> Text
 textify cat_name video = cat_name
-	<> "|" <> ((channelTitle . snippet) video)
-	<> "|" <> ((title . snippet) video)
-	<> "|" <> (maybe "" id $ statistics video >>= views)
-	<> "|" <> (maybe "" id $ statistics video >>= likes)
-	<> "|" <> (maybe "" id $ statistics video >>= dislikes)
-	<> "|" <> (maybe "" id $ statistics video >>= comments)
-	<> "|" <> (maybe "" id $ content video >>= Duration.extract . duration)
+	<> "|" <> (clearify $ (channelTitle . snippet) video)
+	<> "|" <> (clearify $ id' video)
+	<> "|" <> (clearify $ (title . snippet) video)
+	<> "|" <> (clearify $ maybe "" id $ statistics video >>= views)
+	<> "|" <> (clearify $ maybe "" id $ statistics video >>= likes)
+	<> "|" <> (clearify $ maybe "" id $ statistics video >>= dislikes)
+	<> "|" <> (clearify $ maybe "" id $ statistics video >>= comments)
+	<> "|" <> (clearify $ maybe "" id $ content video >>= Duration.extract . duration)
 
 save :: Category -> Video -> IO ()
 save cat video = T.appendFile "Temporary/result.csv" $ 
